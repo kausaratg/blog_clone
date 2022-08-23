@@ -11,7 +11,7 @@ class Post(models.Model):
     created_date  = models.DateTimeField(default=timezone.now())
     published_date = models.DateTimeField(blank=True, null=True)
   
-    def pusblish(self):
+    def publish(self):
         self.published_date = timezone.now()
         self.save()
     
@@ -21,11 +21,11 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('post_detail', kwargs={'pk':self.pk})
 
-    def __str_(self):
+    def __str__(self):
         return self.title
 
 class Comment(models.Model):
-    post = models.ForeignKey('blog.Post', related_name="comments")
+    post = models.ForeignKey(Post, related_name="comments")
     author = models.CharField(max_length=100)
     text = models.TextField()
     create_date = models.DateTimeField(default=timezone.now)
